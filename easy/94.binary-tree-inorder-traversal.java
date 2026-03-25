@@ -7,6 +7,7 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -65,26 +66,25 @@ class Solution {
     // }
 
     public List<Integer> inorderTraversal (TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        if (root == null) {
-            return list;
-        }
-
+        List<Integer> result = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode cur = root;
-        while (cur != null || !stack.isEmpty()) {
+         if (root == null) {
+            return result;
+         }
+
+         TreeNode cur = root;
+         while (cur != null || !stack.isEmpty()) {
             if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
             } else {
                 cur = stack.pop();
-                list.add(cur.val);
+                result.add(cur.val);
                 cur = cur.right;
             }
-        }
+         }
 
-        return list;
-
+         return result;
 
     }
 }

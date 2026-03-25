@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=102 lang=java
+ * @lc app=leetcode id=515 lang=java
  *
- * [102] Binary Tree Level Order Traversal
+ * [515] Find Largest Value in Each Tree Row
  */
 
 // @lc code=start
@@ -26,7 +26,6 @@ import java.util.Queue;
  * }
  */
 
-
 class TreeNode {
     int val;
     TreeNode left;
@@ -47,9 +46,8 @@ class TreeNode {
 }
 
 class Solution {
-    
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new LinkedList<>();
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
         Queue<TreeNode> queue = new LinkedList<>();
 
         if (root == null) {
@@ -58,27 +56,27 @@ class Solution {
 
         queue.offer(root);
         while (!queue.isEmpty()) {
-            List<Integer> list = new LinkedList<>();
             int len = queue.size();
+            int max = Integer.MIN_VALUE;
             for (int i = 0; i < len; i++) {
                 TreeNode cur = queue.poll();
+                
+                if (cur.val > max) {
+                    max = cur.val;
+                }
+
                 if (cur.left != null) {
                     queue.offer(cur.left);
                 }
                 if (cur.right != null) {
                     queue.offer(cur.right);
-                }
-                list.add(cur.val);      
+                }     
             }
-            result.add(list);
+            result.add(max);
         }
         return result;
         
     }
-
-    
-        
-    
 }
 // @lc code=end
 

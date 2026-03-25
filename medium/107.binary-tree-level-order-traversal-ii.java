@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=102 lang=java
+ * @lc app=leetcode id=107 lang=java
  *
- * [102] Binary Tree Level Order Traversal
+ * [107] Binary Tree Level Order Traversal II
  */
 
 // @lc code=start
@@ -9,6 +9,8 @@
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import javax.management.QueryEval;
 
 /**
  * Definition for a binary tree node.
@@ -25,7 +27,6 @@ import java.util.Queue;
  *     }
  * }
  */
-
 
 class TreeNode {
     int val;
@@ -47,38 +48,42 @@ class TreeNode {
 }
 
 class Solution {
-    
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new LinkedList<>();
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> list = new LinkedList<>();
         Queue<TreeNode> queue = new LinkedList<>();
 
         if (root == null) {
-            return result;
+            return list;
         }
+
+        int len = 0;
 
         queue.offer(root);
         while (!queue.isEmpty()) {
-            List<Integer> list = new LinkedList<>();
-            int len = queue.size();
-            for (int i = 0; i < len; i++) {
-                TreeNode cur = queue.poll();
-                if (cur.left != null) {
-                    queue.offer(cur.left);
+            List<Integer> levelList = new LinkedList<>();
+            len = queue.size();
+            
+            while (len > 0) {
+                TreeNode top = queue.poll();
+                levelList.add(top.val);
+                if (top.left != null) {
+                    queue.offer(top.left);
                 }
-                if (cur.right != null) {
-                    queue.offer(cur.right);
+                if (top.right != null) {
+                    queue.offer(top.right);
                 }
-                list.add(cur.val);      
+                len--;
             }
-            result.add(list);
+            list.add(levelList);
         }
+        List<List<Integer>> result = new LinkedList<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            result.add(list.get(i));
+        }
+
         return result;
         
     }
-
-    
-        
-    
 }
 // @lc code=end
 
