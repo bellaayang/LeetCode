@@ -8,6 +8,7 @@ package easy;
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -67,26 +68,36 @@ class Solution {
     // }
 
     public List<Integer> postorderTraversal (TreeNode root) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> result = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
+        if (root == null) {
+            return result;
+        }
+
         TreeNode cur = root;
-        TreeNode lastVisit = null;
+        TreeNode prev = null;
 
         while (cur != null || !stack.isEmpty()) {
-            if(cur != null) {
+            while (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
-            } else {
-                TreeNode top = stack.peek();
-                if (top.right == null || lastVisit == top.right) {
-                    list.add(top.val);
-                    lastVisit = stack.pop();     
-                } else {
-                    cur = top.right;
-                }
             }
+
+            cur = stack.peek();
+            if (cur.right == null || cur.right == prev) {
+                result.add(stack.pop().val);
+                prev = cur;
+                cur = null;
+            } else {
+                cur = cur.right;
+            }
+            
+
+            
         }
-        return list;
+
+        return result;
+        
     }
 }
 // @lc code=end

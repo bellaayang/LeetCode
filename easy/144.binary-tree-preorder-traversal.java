@@ -7,6 +7,7 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -62,30 +63,28 @@ class Solution {
     //     preorder(node.right, list);
     // }
 
-    public List<Integer> preorderTraversal (TreeNode root) {
-        List<Integer> list = new ArrayList<>();
+    public List<Integer> preorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> result = new LinkedList<>();
         if (root == null) {
-            return list;
+            return result;
         }
 
-        Stack<TreeNode> treeStack = new Stack<>();
-        treeStack.push(root);
-        while (!treeStack.isEmpty()) {
-            TreeNode node = treeStack.pop();
-            list.add(node.val);
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            result.add(node.val);
             if (node.right != null) {
-                treeStack.push(node.right);
+                stack.push(node.right);
             }
             if (node.left != null) {
-                treeStack.push(node.left);
+                stack.push(node.left);
             }
+
         }
 
-        return list;
-        
+        return result;
     }
-
 
 }
 // @lc code=end
-
