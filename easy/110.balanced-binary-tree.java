@@ -42,31 +42,36 @@ class TreeNode {
 
 class Solution {
     public boolean isBalanced(TreeNode root) {
-        return treeHeight(root) != -1;
+        int height = height(root);
+        return height != -1;
+        
+        
         
     }
 
-    private int treeHeight (TreeNode root) {
+    private int height (TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int leftHeight = treeHeight(root.left);
-        if (leftHeight == -1) {
+        int heightLeft = height(root.left);
+        if (heightLeft == -1) {
             return -1;
         }
 
-        int rightHeight = treeHeight(root.right);
-        if (rightHeight == -1) {
+        int heightRight = height(root.right);
+        if (heightRight == -1) {
             return -1;
         }
 
-        if (Math.abs(leftHeight - rightHeight) > 1) {
+        if (Math.abs(heightLeft - heightRight) > 1) {
             return -1;
         }
 
-        return Math.max(leftHeight, rightHeight) + 1;
+        return Math.max(heightLeft, heightRight) + 1;
     }
+
+    
 }
 // @lc code=end
 

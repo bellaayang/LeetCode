@@ -49,48 +49,47 @@ class TreeNode {
 }
 
 class Solution {
-    // public List<Integer> inorderTraversal(TreeNode root) {
-    //     List<Integer> list = new ArrayList<>();
-    //     inorder(root, list);
-    //     return list;
+    /* 
+    public List<Integer> inorderTraversal (TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+        inorder(root, result);
+        return result;       
+    }
 
-        
-    // }
+    private void inorder (TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
 
-    // private void inorder(TreeNode node, List<Integer> list) {
-    //     if (node == null) {
-    //         return;
-    //     }
-
-    //     inorder(node.left, list);
-    //     list.add(node.val);
-    //     inorder(node.right, list);
-    // }
+        inorder(root.left, result);
+        result.add(root.val);
+        inorder(root.right, result);
+    } 
+    */
 
     public List<Integer> inorderTraversal (TreeNode root) {
-        List<Integer> list = new LinkedList<>();
+        List<Integer> result = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
 
         if (root == null) {
-            return list;
+            return result;
         }
 
         TreeNode cur = root;
         while (cur != null || !stack.isEmpty()) {
-            while (cur != null) {
+            if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
+            } else {
+                cur = stack.pop();
+                result.add(cur.val);
+                cur = cur.right;
             }
-
-            cur = stack.pop();
-            list.add(cur.val);
-
-            cur = cur.right;
         }
 
-        return list;
-
+        return result;
     }
+    
 }
 // @lc code=end
 

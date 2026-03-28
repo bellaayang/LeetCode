@@ -1,4 +1,3 @@
-package easy;
 /*
  * @lc app=leetcode id=145 lang=java
  *
@@ -7,29 +6,25 @@ package easy;
 
 // @lc code=start
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
- * this.val = val;
- * this.left = left;
- * this.right = right;
- * }
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
-
 class TreeNode {
     int val;
     TreeNode left;
@@ -50,26 +45,30 @@ class TreeNode {
 }
 
 class Solution {
-    // public List<Integer> postorderTraversal(TreeNode root) {
-    //     List<Integer> list = new ArrayList<>();
-    //     postorder(root, list);
-    //     return list;
-    // }
+    /*
+    public List<Integer> postorderTraversal (TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+        postorder(root, result);
+        return result;
+        
 
-    // private void postorder (TreeNode node, List<Integer> list) {
-    //     if (node == null) {
-    //         return;
-    //     }
+    }
 
-    //     postorder(node.left, list);
-    //     postorder(node.right, list);
-    //     list.add(node.val);
+    private void postorder (TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
 
-    // }
+        postorder(root.left, result);
+        postorder(root.right, result);
+        result.add(root.val);
+    }
+     */
 
     public List<Integer> postorderTraversal (TreeNode root) {
         List<Integer> result = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
+
         if (root == null) {
             return result;
         }
@@ -78,26 +77,30 @@ class Solution {
         TreeNode prev = null;
 
         while (cur != null || !stack.isEmpty()) {
-            while (cur != null) {
+            if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
-            }
-
-            cur = stack.peek();
-            if (cur.right == null || cur.right == prev) {
-                result.add(stack.pop().val);
-                prev = cur;
-                cur = null;
             } else {
-                cur = cur.right;
+                cur = stack.peek();
+                if (cur.right == null || cur.right == prev) {
+                    cur = stack.pop();
+                    result.add(cur.val);
+                    prev = cur;
+                    cur = null;
+                    
+                } else {
+                    cur = cur.right;
+                    
+                }
             }
-            
-
-            
         }
 
         return result;
-        
+
     }
+
+
+    
 }
 // @lc code=end
+
