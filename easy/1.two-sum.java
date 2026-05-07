@@ -1,0 +1,34 @@
+/*
+ * @lc app=leetcode id=1 lang=java
+ *
+ * [1] Two Sum
+ */
+
+// @lc code=start
+
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int temp = target - nums[i];
+            if (map.containsKey(temp)) {
+                result[0] = i;
+                result[1] = map.get(temp);
+                break;
+            } else {
+                map.put(nums[i], i);
+            }     
+        }
+
+        return result;
+
+        
+    }
+}
+// @lc code=end
+
