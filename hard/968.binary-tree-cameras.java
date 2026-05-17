@@ -41,7 +41,13 @@
 }
 
 class Solution {
+    int number = 0;
     public int minCameraCover(TreeNode root) {
+        if (dfs(root) == 0) {
+            number++;
+        }
+
+        return number;
 
     }
 
@@ -52,7 +58,18 @@ class Solution {
 
         int left = dfs(node.left);
         int right = dfs(node.right);
-        
+
+        if (left == 0 || right == 0) {
+            number++;
+            return 2;
+        }
+
+        if (left == 2 || right == 2) {
+            return 1;
+        }
+
+        return 0;
+
 
 
     }
