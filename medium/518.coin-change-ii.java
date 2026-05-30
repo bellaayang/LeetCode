@@ -8,16 +8,16 @@
 class Solution {
     public int change(int amount, int[] coins) {
         int len = coins.length;
-        int[][] dp = new int[len][amount + 1];
 
-        for (int i = 0; i < len; i++) {
-            dp[i][0] = 1;   
+        int[][] dp = new int[len][amount + 1];
+        for (int i = 0; i < amount + 1; i++) {
+            if (i % coins[0] == 0) {
+                dp[0][i] = 1;
+            }      
         }
 
-        for (int j = coins[0]; j <= amount; j++) {
-            if (j % coins[0] == 0) {
-                dp[0][j] = 1;
-            }   
+        for (int i = 0; i < len; i++) {
+            dp[i][0] = 1;
         }
 
         for (int i = 1; i < len; i++) {
@@ -26,14 +26,14 @@ class Solution {
                     dp[i][j] = dp[i - 1][j];
                 } else {
                     dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i]];
+
                 }
                 
             }
         }
-            
-        
 
         return dp[len - 1][amount];
+        
         
     }
 }
