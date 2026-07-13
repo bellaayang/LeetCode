@@ -6,49 +6,36 @@
 
 // @lc code=start
 
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
 
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        int[] newHeights = new int[heights.length + 2];
-        newHeights[0] = 0;
-        newHeights[newHeights.length - 1] = 0;
-        int index = 0;
-        for (int i = 1; i < newHeights.length - 1; i++) {
-            newHeights[i] = heights[index];
-            index++;
-        }
-
-        int result = 0;
-
-        Deque<Integer> stack = new LinkedList<>();
-        stack.push(0);
-        for (int i = 1; i < newHeights.length; i++) {
-            if (newHeights[stack.peek()] < newHeights[i]) {
-                stack.push(i);
-            } else if (newHeights[stack.peek()] == newHeights[i]) {
-                stack.pop();
-                stack.push(i);
-            } else {
-                while (!stack.isEmpty() && (newHeights[stack.peek()] > newHeights[i])) {
-                    int mid = stack.peek();
-                    stack.pop();
-                    if (!stack.isEmpty()) {
-                        int right = i;
-                        int left = stack.peek();
-                        int h = newHeights[mid];
-                        int w = right - left - 1;
-                        int v = h * w;
-                        result = Math.max(result, v);
-                    }
+        Deque<int[]> stack = new ArrayDeque<>();
+        int maxArea = 0;
+        for (int i = 0; i < heights.length; i++) {
+            int start = i;
+            while (!stack.isEmpty()) {
+                if (stack.peek()[1] > heights[i]) {
+                    maxArea = Math.max((i - stack.peek()[0]) * stack.peek()[1], maxArea);
+                    start = stack.peek()[0];
+                    stack.poll();
+                } else {
+                    break;
                 }
-                stack.push(i);
             }
-            
+            stack.push(new int[]{start, heights[i]});
         }
 
-        return result;
+        for (int[] s : stack) {
+            int index = s[0];
+            int height = s[1];
+            maxArea = Math.max(maxArea, (heights.length - index) * height);
+        }
+
+        return maxArea;
+
+        
         
     }
 }
