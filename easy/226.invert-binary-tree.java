@@ -47,35 +47,18 @@ class TreeNode {
 
 class Solution {
     public TreeNode invertTree(TreeNode root) {
-        Queue<TreeNode> queue = new LinkedList<>();
         if (root == null) {
-            return root;
+            return null;
         }
 
-        queue.offer(root);
-        while (!queue.isEmpty()) {
-            int len = queue.size();
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
 
-            for (int i = 0; i < len; i++) {
-                TreeNode node = queue.poll();
-                swap(node);
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }        
-            }
-        }
+        invertTree(root.left);
+        invertTree(root.right);
+
         return root;
-
-        
-    }
-
-    private void swap (TreeNode node) {
-        TreeNode temp = node.left;
-        node.left = node.right;
-        node.right = temp;
     }
 }
 // @lc code=end
