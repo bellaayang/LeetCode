@@ -6,6 +6,7 @@
 
 // @lc code=start
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -49,36 +50,35 @@ class TreeNode {
 class Solution {
     
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new LinkedList<>();
-        Queue<TreeNode> queue = new LinkedList<>();
-
         if (root == null) {
-            return result;
+            return new ArrayList<>();
         }
 
-        queue.offer(root);
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> result = new ArrayList<>();
+
+        TreeNode cur = root;
+        queue.add(cur);
         while (!queue.isEmpty()) {
             List<Integer> list = new LinkedList<>();
-            int len = queue.size();
-            for (int i = 0; i < len; i++) {
-                TreeNode cur = queue.poll();
-                if (cur.left != null) {
-                    queue.offer(cur.left);
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                list.add(node.val);
+                if (node.left != null) {
+                    queue.add(node.left);
                 }
-                if (cur.right != null) {
-                    queue.offer(cur.right);
+                if (node.right != null) {
+                    queue.add(node.right);
                 }
-                list.add(cur.val);      
             }
             result.add(list);
+            
         }
+
         return result;
-        
     }
 
-    
-        
-    
 }
 // @lc code=end
 

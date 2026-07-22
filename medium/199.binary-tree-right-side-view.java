@@ -6,6 +6,7 @@
 
 // @lc code=start
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -46,34 +47,31 @@ class TreeNode {
 
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<Integer> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
 
-        if (root == null) {
-            return result;
-        }
-
-        queue.offer(root);
+        queue.add(root);
         while (!queue.isEmpty()) {
-            int len = queue.size();
-            while (len > 0) {
+            int size = queue.size();
+            TreeNode right = new TreeNode();
+            for (int i = 0; i < size; i++) {
                 TreeNode cur = queue.poll();
+                right = cur;
                 if (cur.left != null) {
-                    queue.offer(cur.left);
+                    queue.add(cur.left);
                 }
+
                 if (cur.right != null) {
-                    queue.offer(cur.right);
-                }
-                len--;
-                if (len == 0) {
-                    result.add(cur.val);
+                    queue.add(cur.right);
                 }
             }
-
+            result.add(right.val);
         }
 
         return result;
-
     }
 }
 // @lc code=end

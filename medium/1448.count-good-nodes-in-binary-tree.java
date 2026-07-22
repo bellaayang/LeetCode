@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=98 lang=java
+ * @lc app=leetcode id=1448 lang=java
  *
- * [98] Validate Binary Search Tree
+ * [1448] Count Good Nodes in Binary Tree
  */
 
 // @lc code=start
@@ -20,7 +20,6 @@
  *     }
  * }
  */
-
 class TreeNode {
     int val;
     TreeNode left;
@@ -40,23 +39,24 @@ class TreeNode {
     }
 }
 
-
 class Solution {
-   
-    public boolean isValidBST(TreeNode root) {
-        return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    
+    public int goodNodes(TreeNode root) {
+        return dfs(root, root.val);
     }
 
-    private boolean dfs(TreeNode node, long left, long right) {
+    private int dfs (TreeNode node, int maxVal) {
         if (node == null) {
-            return true;
+            return 0;
         }
 
-        if (!(node.val > left && node.val < right)) {
-            return false;
-        }
+        int res = node.val >= maxVal ? 1 : 0;
+        maxVal = Math.max(maxVal, node.val);
 
-        return (dfs(node.left, left, node.val) && dfs(node.right, node.val, right));
+        res += dfs(node.left, maxVal);
+        res += dfs(node.right, maxVal);
+
+        return res;
     }
 }
 // @lc code=end

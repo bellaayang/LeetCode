@@ -1,10 +1,17 @@
 /*
- * @lc app=leetcode id=98 lang=java
+ * @lc app=leetcode id=230 lang=java
  *
- * [98] Validate Binary Search Tree
+ * [230] Kth Smallest Element in a BST
  */
 
 // @lc code=start
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -40,23 +47,29 @@ class TreeNode {
     }
 }
 
-
 class Solution {
-   
-    public boolean isValidBST(TreeNode root) {
-        return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
-    }
+    public int kthSmallest(TreeNode root, int k) {
+        int n = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
 
-    private boolean dfs(TreeNode node, long left, long right) {
-        if (node == null) {
-            return true;
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+                
+            }
+           cur = stack.pop();
+            n++;
+            if (n == k) {
+                return cur.val;
+            }
+
+            cur = cur.right;
+
         }
 
-        if (!(node.val > left && node.val < right)) {
-            return false;
-        }
-
-        return (dfs(node.left, left, node.val) && dfs(node.right, node.val, right));
+        return -1;
     }
 }
 // @lc code=end
