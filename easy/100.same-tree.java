@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=110 lang=java
+ * @lc app=leetcode id=100 lang=java
  *
- * [110] Balanced Binary Tree
+ * [100] Same Tree
  */
 
 // @lc code=start
@@ -20,7 +20,6 @@
  *     }
  * }
  */
-
 class TreeNode {
     int val;
     TreeNode left;
@@ -41,23 +40,26 @@ class TreeNode {
 }
 
 class Solution {
-    public boolean isBalanced(TreeNode root) {
-        int[] balance = dfs(root);
-        return balance[0] == 1;
-    }
-
-    private int[] dfs (TreeNode node) {
-        if (node == null) {
-            return new int[]{1, 0};
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
         }
 
-        int[] left = dfs(node.left);
-        int[] right = dfs(node.right);
+        boolean isSameLeft = isSameTree(p.left, q.left);
+        boolean isSameRight = isSameTree(p.right, q.right);
 
-        boolean balanced = (left[0] == 1 && right[0] == 1 && Math.abs(left[1] - right[1]) <= 1);
-        int height = 1 + Math.max(left[1], right[1]);
+        if (isSameLeft && isSameRight) {
+            return true;
+        }
 
-        return new int[] {balanced ? 1 : 0, height};
+        return false;
+        
     }
 }
 // @lc code=end
