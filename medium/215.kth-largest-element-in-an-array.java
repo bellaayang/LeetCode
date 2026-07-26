@@ -11,17 +11,14 @@ import java.util.PriorityQueue;
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            minHeap.add(num);
+        for (int num : nums) {
+            minHeap.offer(num);
             if (minHeap.size() > k) {
                 minHeap.poll();
             }
         }
 
-        return minHeap.peek();
-        
+        return minHeap.poll();
     }
 }
 // @lc code=end
-
