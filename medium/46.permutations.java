@@ -12,35 +12,32 @@ import java.util.List;
 class Solution {
     List<Integer> path = new LinkedList<>();
     List<List<Integer>> result = new LinkedList<>();
-    boolean[] used;
-    
+    boolean[] visited;
     
     public List<List<Integer>> permute(int[] nums) {
-        used = new boolean[nums.length];
+        visited = new boolean[nums.length];
         backtracking(nums);
         return result;
-         
     }
 
-    private void backtracking (int[] nums) {
+    private void backtracking(int[] nums) {
         if (path.size() == nums.length) {
             result.add(new LinkedList<>(path));
             return;
         }
+
         for (int i = 0; i < nums.length; i++) {
-            if (used[i] == true) {
+            if (visited[i] == true) {
                 continue;
             }
+
             path.add(nums[i]);
-            used[i] = true;
+            visited[i] = true;
             backtracking(nums);
-            used[i] = false;
-            path.removeLast();       
+            path.remove(path.size() - 1);
+            visited[i] = false;
         }
     }
-    
-
-    
 }
 // @lc code=end
 

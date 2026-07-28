@@ -13,39 +13,32 @@ import java.util.List;
 class Solution {
     List<Integer> path = new LinkedList<>();
     List<List<Integer>> result = new LinkedList<>();
-    boolean[] used;
+    boolean[] visited;
 
     public List<List<Integer>> subsetsWithDup(int[] nums) {
+        visited = new boolean[nums.length];
+        Arrays.fill(visited, false);
         Arrays.sort(nums);
-        used = new boolean[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            used[i] = false;        
-        }
-        backtracking(nums, used, 0);
+
+        backtracking(nums, 0);
         return result;
-        
-        
     }
 
-    private void backtracking (int[] nums, boolean[] used, int startIndex) {
+    private void backtracking(int[] nums, int startIndex) {
         result.add(new LinkedList<>(path));
-        if (startIndex >= nums.length) {
-            return;
-        }
-
-        for (int i = startIndex; i < used.length; i++) {
-            if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) {
+        for (int i = startIndex; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1] && visited[i - 1] == false) {
                 continue;
-                
-            }   
+            }
             path.add(nums[i]);
-            used[i] = true;
-            backtracking(nums, used, i + 1);
-            used[i] = false;
-            path.removeLast();  
+            visited[i] = true;
+            backtracking(nums, i + 1);
+            path.remove(path.size() - 1);
+            visited[i] = false;
         }
-
     }
+
+    
 }
 // @lc code=end
 
