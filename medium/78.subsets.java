@@ -10,28 +10,31 @@ import java.util.LinkedList;
 import java.util.List;
 
 class Solution {
-    List<Integer> path = new LinkedList<>();
-    List<List<Integer>> result = new LinkedList<>();
+    List<Integer> paths = new LinkedList<>();
+    List<List<Integer>> res = new LinkedList<>();
+   
     public List<List<Integer>> subsets(int[] nums) {
         backtracking(nums, 0);
-        return result;
+        return res;
+        
         
     }
 
     private void backtracking (int[] nums, int startIndex) {
-        result.add(new LinkedList<>(path));
-
+        res.add(new LinkedList<>(paths));
         if (startIndex >= nums.length) {
             return;
         }
 
         for (int i = startIndex; i < nums.length; i++) {
-            path.add(nums[i]);
+            paths.add(nums[i]);
             backtracking(nums, i + 1);
-            path.removeLast();    
+            paths.remove(paths.size() - 1);
+            
         }
-
     }
+
+    
 }
 // @lc code=end
 
