@@ -10,31 +10,33 @@ import java.util.LinkedList;
 import java.util.List;
 
 class Solution {
-    String[] numString = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    StringBuilder path = new StringBuilder();
     List<String> result = new LinkedList<>();
-
+    String[] numString = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    StringBuilder sb = new StringBuilder();
+    
     public List<String> letterCombinations(String digits) {
-        int index = 0;
-        backtracking(digits, index, numString);
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+        backtracking(digits, 0);
         return result;
+        
         
     }
 
-    private void backtracking (String digits, int index, String[] numString) {
-        if (index == digits.length()) {
-            result.add(path.toString());
+    private void backtracking (String digits, int num) {
+        if (num == digits.length()) {
+            result.add(sb.toString());
             return;
         }
 
-        String str = numString[digits.charAt(index) - '0'];
-        for (int i = 0; i < str.length(); i++) {
-            path.append(str.charAt(i));
-            backtracking(digits, index + 1, numString);
-            path.deleteCharAt(path.length() - 1);
-            
-        }
+        String str = numString[digits.charAt(num) - '0'];
 
+        for (int i = 0; i < str.length(); i++) {
+            sb.append(str.charAt(i));
+            backtracking(digits, num + 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
     }
 }
 // @lc code=end

@@ -7,78 +7,55 @@
 // @lc code=start
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 class Solution {
     List<List<String>> result = new LinkedList<>();
-    char[][] chessBoard;
+    Set<Integer> col = new HashSet<>();
+    Set<Integer> negDiag = new HashSet<>();
+    Set<Integer> posDia = new HashSet<>();
+    
     public List<List<String>> solveNQueens(int n) {
-        chessBoard = new char[n][n];
-        for (char[] row : chessBoard) {
+        char[][] board = new char[n][n];
+        for (char[] row : board) {
             Arrays.fill(row, '.');
+            
         }
-        backtracking(n, 0);
+        
+        backtracking(n, board, 0);
         return result;
-
         
     }
 
-    private void backtracking (int n, int row) {
+    private void backtracking(int n, char[][] board, int row) {
         if (row == n) {
-            
-            result.add(arrayToList(chessBoard));
+            List<String> path = new LinkedList<>();
+            for (char[] r : board) {
+                path.add(new String(r));
+            }
+            result.add(new LinkedList<>(path));
             return;
-        } 
-
-        for (int col = 0; col < n; col++) {
-            if (isValid (row, col, n, chessBoard)){
-                chessBoard[row][col] = 'Q';
-                backtracking(n, row + 1);
-                chessBoard[row][col] = '.';      
-            }
-            
-        }
-    }
-
-    private List arrayToList (char[][] chessBoard) {
-        List<String> path = new LinkedList<>();
-        for (char[] c : chessBoard) {
-            path.add(String.copyValueOf(c));            
-        }
-        return path;
-    }
-        
-
-    private boolean isValid (int row, int col, int n, char[][] chessBoard) {
-        for (int i = 0; i < row; i++) {
-            if (chessBoard[i][col] == 'Q') {
-                return false;
-            }
-            
         }
 
-       for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-            if (chessBoard[i][j] == 'Q') {
-                return false;
+        for (int c = 0; c < n; c++) {
+            if (col.contains(c) || negDiag.contains(row - c) || posDia.contains(row + c)) {
+                continue;
             }
 
-       }
-
-       for (int i = row - 1, j = col + 1; i >= 0 && j <= n - 1; i--, j++) {
-            if (chessBoard[i][j] == 'Q') {
-                return false;
-            }
-       }
-
-       return true;
-
-        
-        
+            col.add(c);
+            negDiag.add(row - c);
+            posDia.add(row + c);
+            board[row][c] = 'Q';
+            backtracking(n, board, row + 1);
+            col.remove(c);
+            negDiag.remove(row - c);
+            posDia.remove(row + c);
+            board[row][c] = '.';
+        }
     }
-    
-
-    
 }
 // @lc code=end
 
