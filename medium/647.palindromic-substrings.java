@@ -7,31 +7,27 @@
 // @lc code=start
 class Solution {
     public int countSubstrings(String s) {
-        char[] chars = s.toCharArray();
-        int len = s.length();
-        boolean[][] dp = new boolean[len][len];
-        int result = 0;
-
-        for (int i = len - 1; i >= 0; i--) {
-            for (int j = i; j < len; j++) {
-                if (chars[i] == chars[j]) {
-                    if (j - i <= 1) {
-                        dp[i][j] = true;
-                        result++;
-                    } else {
-                        if (dp[i + 1][j - 1] == true) {
-                            dp[i][j] = true;
-                            result++;
-                        }
-                    }
-                }
-                
+        int res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int l = i;
+            int r = i;
+            while (l >= 0 && r >= 0 && l < s.length() && r < s.length() && s.charAt(l) == s.charAt(r)) {
+                res++;
+                l--;
+                r++;
             }
-            
+
+            l = i;
+            r = i + 1;
+            while (l >= 0 && r >= 0 && l < s.length() && r < s.length() && s.charAt(l) == s.charAt(r)) {
+                res++;
+                l--;
+                r++;
+
+            }  
         }
 
-        return result;
-        
+        return res;
     }
 }
 // @lc code=end

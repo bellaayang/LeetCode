@@ -5,31 +5,23 @@
  */
 
 // @lc code=start
+
+import java.util.Arrays;
+
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        int len = coins.length;
         int[] dp = new int[amount + 1];
-        dp[0]  = 0;
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
         for (int i = 1; i < amount + 1; i++) {
-            dp[i] = Integer.MAX_VALUE;      
-        }
-
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < amount + 1; j++) {
-                if (j >= coins[i] && dp[j - coins[i]] != Integer.MAX_VALUE) {
-                    dp[j] = Math.min(dp[j - coins[i]] + 1, dp[j]);
+            for (int j = 0; j < coins.length; j++) {
+                if (i - coins[j] >= 0) {
+                     dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
                 }
-                
             }
-            
         }
 
-        if (dp[amount] != Integer.MAX_VALUE) {
-            return dp[amount];
-        } else {
-            return -1;
-        }
-        
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 }
 // @lc code=end
