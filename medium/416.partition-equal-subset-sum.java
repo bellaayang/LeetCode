@@ -7,27 +7,28 @@
 // @lc code=start
 class Solution {
     public boolean canPartition(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return false;
-        }
         int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];    
-        }
-        if (sum % 2 != 0) {
-            return false;
-        }
-        int target = sum / 2;
-        
-        int[] dp = new int[target + 1];
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = target; j >= nums[i]; j--) {
-                dp[j] = Math.max(dp[j], nums[i] + dp[j - nums[i]]);
-            }
-            
+        for (int num : nums) {
+            sum += num;
         }
 
-        return dp[target] == target;
+        if (sum % 2 == 1) {
+            return false;
+        }
+
+        int target = sum / 2;
+        
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;
+
+        for (int num : nums) {
+            for (int j = target; j >= num; j--) {
+                dp[j] = dp[j] || dp[j - num];
+            }
+
+        }
+
+        return dp[target];
         
     }
 }
