@@ -12,26 +12,26 @@ import java.util.List;
 
 class Solution {
     public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        List<int[]> res = new ArrayList<>();
+        int curStart = intervals[0][0];
+        int curEnd = intervals[0][1];
 
-        List<int[]> result = new ArrayList<>();
-
-        int right = intervals[0][1];
-        int left = intervals[0][0];
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] <= right) {
-                right = Math.max(right, intervals[i][1]);
+            int start = intervals[i][0];
+            int end = intervals[i][1];
+
+            if (start <= curEnd) {
+                curEnd = Math.max(curEnd, end);
             } else {
-                result.add(new int[]{left, right});
-                left = intervals[i][0];
-                right = intervals[i][1];
-
+                res.add(new int[]{curStart, curEnd});
+                curStart = start;
+                curEnd = end;
             }
-            
         }
-        result.add(new int[]{left, right});
 
-        return result.toArray(new int[result.size()][2]);
+        res.add(new int[]{curStart, curEnd});
+        return res.toArray(new int[res.size()][]);
         
     }
 }
