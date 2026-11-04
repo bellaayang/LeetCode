@@ -7,18 +7,13 @@
 // @lc code=start
 class Solution {
     public boolean canJump(int[] nums) {
-        if (nums.length == 1) {
-            return true;
+        int goal = nums.length - 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (i + nums[i] >= goal) {
+                goal = i;
+            }
         }
-
-        int coverRange = 0;
-        for (int i = 0; i <= coverRange; i++) {
-            coverRange = Math.max(coverRange, i + nums[i]);
-            if (coverRange >= nums.length - 1) {
-                return true;
-            }    
-        }
-        return false;
+        return goal == 0;
 
         
     }
