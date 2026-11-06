@@ -5,26 +5,26 @@
  */
 
 // @lc code=start
+
+import java.util.Arrays;
+
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int totalRest = 0;
-        int restSum = 0;
-        int start = 0;
-        for (int i = 0; i < gas.length; i++) {
-            restSum += gas[i] - cost[i];
-            totalRest += gas[i] - cost[i];
-            if (restSum < 0) {
-                restSum = 0;
-                start = (i + 1) % gas.length;
-            }     
+        if (Arrays.stream(gas).sum() - Arrays.stream(cost).sum() < 0) {
+            return -1;
         }
 
-        if (totalRest < 0) {
-            return -1;
-        } 
+        int res = 0;
+        int total = 0;
+        for (int i = 0; i < cost.length; i++) {
+            total += gas[i] - cost[i];
+            if (total < 0) {
+                total = 0;
+                res = i + 1;
+            }
+        }
 
-        return start;
-        
+        return res;
     }
 }
 // @lc code=end
