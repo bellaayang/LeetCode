@@ -7,29 +7,29 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 class Solution {
     public List<Integer> partitionLabels(String s) {
         List<Integer> result = new ArrayList<>();
-        int[] edge = new int[27];
-
+        HashMap<Character, Integer> lastIndex = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
-            edge[s.charAt(i) - 'a'] = i;     
+            lastIndex.put(s.charAt(i), i);
         }
 
-        int left = 0;
-        int right = 0;
+        int size = 0;
+        int end = 0;
         for (int i = 0; i < s.length(); i++) {
-            right = Math.max(right, edge[s.charAt(i) - 'a']);
-            if (i == right) {
-                result.add(right - left + 1);
-                left = right + 1;
-            }              
+            size++;
+            end = Math.max(end, lastIndex.get(s.charAt(i)));
+            if (i == end) {
+                result.add(size);
+                size = 0;
+            }
         }
 
         return result;
-
         
     }
 }
